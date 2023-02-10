@@ -12,9 +12,7 @@ function show_presses_per_second()
     presses_per_second = table.getn(keypresses)
 
     if presses_per_second > 5 then
-        vim.o.statusline = "%#ErrorMsg#" .. tostring(presses_per_second)
-    else
-        vim.o.statusline = tostring(presses_per_second)
+        vim.o.statusline = "%#ErrorMsg#" .. "slow down" --tostring(presses_per_second)
     end
 end
 
