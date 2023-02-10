@@ -4,15 +4,24 @@ function now()
     return tonumber(timestamp_str)
 end
 
+if not vim.g.niw_slow_down_limit then
+  vim.g.niw_slow_down_limit = 5
+end
+
 if not keypresses then
     keypresses = {}
 end
 
+error_msg_reset = false
 function show_presses_per_second()
     presses_per_second = table.getn(keypresses)
 
-    if presses_per_second > 5 then
+    if presses_per_second > vim.g.niw_slow_down_limit then
         vim.o.statusline = "%#ErrorMsg#" .. "slow down" --tostring(presses_per_second)
+        error_msg_reset = false
+    elseif error_msg_reset == false then
+        vim.o.statusline = ""
+        error_msg_reset = true
     end
 end
 
